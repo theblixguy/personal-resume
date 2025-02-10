@@ -22,7 +22,7 @@ jobs:
         with:
           root_file: Suyash_Srijan_Resume.tex
 
-      - name: Upload resume PDF
+      - name: Upload resume PDF for preview
         uses: actions/upload-artifact@v4.6.0
         with:
           name: Suyash_Srijan_Resume
