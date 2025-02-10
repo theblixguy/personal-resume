@@ -18,10 +18,9 @@ jobs:
         uses: actions/checkout@v4.2.2
       
       - name: Compile resume
-        uses: xu-cheng/latex-action@v3.2.0
+        uses: xu-cheng/latex-action@3.2.0
         with:
           root_file: Suyash_Srijan_Resume.tex
-          path: Suyash_Srijan_Resume.pdf
 
       - name: Upload resume PDF
         uses: actions/upload-artifact@v4.6.0
