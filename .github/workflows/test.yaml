@@ -15,29 +15,31 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6.0.1
       
       - name: Compile resume
-        uses: xu-cheng/latex-action@3.2.0
+        uses: xu-cheng/latex-action@4.0.0
         with:
           root_file: Suyash_Srijan_Resume.tex
 
       - name: Upload resume PDF for preview
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: Suyash_Srijan_Resume
           path: Suyash_Srijan_Resume.pdf
           
       - name: Setup Tailscale VPN
-        uses: tailscale/github-action@v3
+        uses: tailscale/github-action@v4.1.1
         with:
           oauth-client-id: ${{ secrets.TAILSCALE_CLIENT_ID }}
           oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
           tags: tag:ci
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      - name: Setup SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
     
       - name: Deploy changes (dry run)
         run: |
-          sshpass -p "${{ secrets.SSH_SERVER_PASSWORD }}" rsync -e "ssh -o StrictHostKeyChecking=no" -avzhin Suyash_Srijan_Resume.pdf --no-perms ${{ secrets.SSH_SERVER_USERNAME }}@${{ secrets.SSH_SERVER_TAILSCALE_IP }}:${{ secrets.SSH_SERVER_WEB_DOWNLOAD_STORAGE_PATH }}
+          rsync -avzhin Suyash_Srijan_Resume.pdf --no-perms ${{ secrets.SSH_SERVER_USERNAME }}@${{ secrets.SSH_SERVER_TAILSCALE_IP }}:${{ secrets.SSH_SERVER_WEB_DOWNLOAD_STORAGE_PATH }}
