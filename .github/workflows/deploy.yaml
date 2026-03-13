@@ -21,7 +21,7 @@ jobs:
           root_file: Suyash_Srijan_Resume.tex
           
       - name: Setup Tailscale VPN
-        uses: tailscale/github-action@v4.1.1
+        uses: tailscale/github-action@v4.1.2
         with:
           oauth-client-id: ${{ secrets.TAILSCALE_CLIENT_ID }}
           oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
